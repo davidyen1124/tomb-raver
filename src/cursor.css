@@ -1,0 +1,50 @@
+/* Written by scripts/textures.mjs. The pointer is his own hand, drawn by the image model (art/raw/cursor-*.png):
+   open as it moves about, about to pinch over anything that can be pressed or turned, closed while it holds. */
+html {
+  cursor: url(/art/cursor-open.png) 5 2, auto;
+}
+@supports (cursor: image-set(url(/art/cursor-open.png) 1x, url(/art/cursor-open-2x.png) 2x) 0 0, auto) {
+  html {
+    cursor: image-set(url(/art/cursor-open.png) 1x, url(/art/cursor-open-2x.png) 2x) 5 2, auto;
+  }
+}
+@supports (cursor: -webkit-image-set(url(/art/cursor-open.png) 1x, url(/art/cursor-open-2x.png) 2x) 0 0, auto) and (not (cursor: image-set(url(/art/cursor-open.png) 1x, url(/art/cursor-open-2x.png) 2x) 0 0, auto)) {
+  html {
+    cursor: -webkit-image-set(url(/art/cursor-open.png) 1x, url(/art/cursor-open-2x.png) 2x) 5 2, auto;
+  }
+}
+button,
+#canvas.over,
+.wake {
+  cursor: url(/art/cursor-point.png) 5 2, pointer;
+}
+@supports (cursor: image-set(url(/art/cursor-point.png) 1x, url(/art/cursor-point-2x.png) 2x) 0 0, auto) {
+  button,
+#canvas.over,
+.wake {
+    cursor: image-set(url(/art/cursor-point.png) 1x, url(/art/cursor-point-2x.png) 2x) 5 2, pointer;
+  }
+}
+@supports (cursor: -webkit-image-set(url(/art/cursor-point.png) 1x, url(/art/cursor-point-2x.png) 2x) 0 0, auto) and (not (cursor: image-set(url(/art/cursor-point.png) 1x, url(/art/cursor-point-2x.png) 2x) 0 0, auto)) {
+  button,
+#canvas.over,
+.wake {
+    cursor: -webkit-image-set(url(/art/cursor-point.png) 1x, url(/art/cursor-point-2x.png) 2x) 5 2, pointer;
+  }
+}
+#canvas.held,
+button:active {
+  cursor: url(/art/cursor-grab.png) 5 2, grabbing;
+}
+@supports (cursor: image-set(url(/art/cursor-grab.png) 1x, url(/art/cursor-grab-2x.png) 2x) 0 0, auto) {
+  #canvas.held,
+button:active {
+    cursor: image-set(url(/art/cursor-grab.png) 1x, url(/art/cursor-grab-2x.png) 2x) 5 2, grabbing;
+  }
+}
+@supports (cursor: -webkit-image-set(url(/art/cursor-grab.png) 1x, url(/art/cursor-grab-2x.png) 2x) 0 0, auto) and (not (cursor: image-set(url(/art/cursor-grab.png) 1x, url(/art/cursor-grab-2x.png) 2x) 0 0, auto)) {
+  #canvas.held,
+button:active {
+    cursor: -webkit-image-set(url(/art/cursor-grab.png) 1x, url(/art/cursor-grab-2x.png) 2x) 5 2, grabbing;
+  }
+}

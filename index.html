@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover" />
+    <title>TOMB RAVER: DJ Monolith, live from Burial Chamber 2</title>
+    <meta name="description" content="A Turnstone Pebble, under the name DJ Monolith, plays an endless set on two turntables in a burial chamber. Every time a hand touches a knob the music really changes. Fan-made, unofficial." />
+    <meta name="theme-color" content="#0b0810" />
+    <meta property="og:title" content="TOMB RAVER" />
+    <meta property="og:description" content="DJ Monolith, live from Burial Chamber 2. An endless set, mixed by hand. A fan-made page." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tomb-raver.vercel.app/" />
+    <meta property="og:image" content="https://tomb-raver.vercel.app/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://tomb-raver.vercel.app/og.jpg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href="/art/title.png" as="image" />
+    <link rel="preload" href="/art/logo.png" as="image" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+        color: #d8c9a0;
+      }
+      /* The first paint, and all there is before the set: the picture, the name and, once the room has
+         loaded, one thing to press. Until then a thin dark red bar runs along the foot of it. */
+      .title {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        justify-items: center;
+        padding: max(7vh, env(safe-area-inset-top)) 4vw max(9vh, env(safe-area-inset-bottom));
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0) 55%, rgba(8, 0, 0, 0.6) 84%, rgba(0, 0, 0, 0.88) 100%),
+          #000 url(/art/title.png) 50% 42% / cover no-repeat;
+        image-rendering: pixelated;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-font-smoothing: none;
+        transition: opacity 0.5s steps(6);
+      }
+      .title.gone {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .logo {
+        margin: 0;
+        width: min(80vw, 104vh, 896px);
+      }
+      .logo img {
+        display: block;
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated;
+        filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.8));
+      }
+      .title [data-start] {
+        grid-row: 3;
+      }
+      .title-bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: max(6px, 1.4vh);
+        width: 0;
+        background: #7c1010;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- the title: a still, the name, and one thing to choose -->
+    <section class="title" data-title>
+      <h1 class="logo"><img src="/art/logo.png" alt="Tomb Raver" width="448" height="71" /></h1>
+      <button class="menu-item" data-start hidden>New Set</button>
+      <i class="title-bar" data-boot-bar aria-hidden="true"></i>
+    </section>
+    <canvas id="canvas" aria-label="A low-polygon burial chamber. A blue egg-shaped DJ works two turntables and a mixer on a sarcophagus; a crowd of small mummies dances."></canvas>
+    <div id="app" hidden>
+      <!-- on screen during the set: almost nothing, as in the game -->
+      <div class="hud" data-hud hidden>
+        <div class="bar" data-bar aria-hidden="true"><span data-bar-name></span><i><b data-bar-fill></b></i></div>
+        <p class="doing" data-doing aria-hidden="true"></p>
+        <div class="playing" data-playing></div>
+        <div class="pickup" data-pickup aria-hidden="true"></div>
+        <div class="tip" data-tip aria-hidden="true"></div>
+        <nav class="keys" aria-label="Camera and options">
+          <button data-cam="auto" aria-pressed="true" title="Let the director choose (A)">Auto</button>
+          <button data-cam="back" title="Over the shoulder (1)">1</button>
+          <button data-cam="front" title="From the floor (2)">2</button>
+          <button data-cam="top" title="Straight down on the desk (3)">3</button>
+          <button data-cam="side" title="Along the decks (4)">4</button>
+          <button data-cam="wide" title="From the door (5)">5</button>
+          <button data-mute aria-pressed="false" title="Mute (M)">Mute</button>
+        </nav>
+      </div>
+
+      <!-- Only when the browser is holding the sound back: it lets no page play until the page has been
+           touched, and a phone can take the sound away again when the page is put aside. One thing to
+           press, and pressing anything at all brings the music back. -->
+      <div class="wake" data-wake hidden>
+        <button class="menu-item" data-wake-button>Tap for sound</button>
+      </div>
+      <div class="visually-hidden" aria-live="polite" data-live></div>
+    </div>
+    <noscript><p style="position: fixed; inset: 0; display: grid; place-items: center; font: 18px sans-serif; padding: 2em; text-align: center; background: #000; color: #d8c9a0">This page is a small 3D world that makes its own music, and needs JavaScript.</p></noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

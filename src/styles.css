@@ -1,0 +1,292 @@
+@import '@fontsource/arvo/latin-700.css';
+@import '@fontsource/silkscreen/latin-400.css';
+
+:root {
+  --gold-top: #fff0a8;
+  --gold-mid: #f0b030;
+  --gold-low: #a04a10;
+  --ink: #0b0810;
+  /* one picture pixel, in CSS pixels: set from the stage, so the screen furniture sits on the same grid */
+  --px: 2px;
+  --slab: 'Arvo', Rockwell, 'Roboto Slab', 'Courier New', serif;
+  --bit: 'Silkscreen', ui-monospace, Menlo, monospace;
+}
+* {
+  box-sizing: border-box;
+}
+#canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: block;
+  image-rendering: pixelated;
+  touch-action: none;
+}
+#app {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--slab);
+  -webkit-font-smoothing: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#app[hidden],
+[hidden] {
+  display: none !important;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+/* the type every menu in that game was set in: fat slab letters, pale yellow at the top, orange-brown at
+   the bottom, a hard dark shadow underneath */
+.gold,
+.menu-item,
+.doing,
+.playing b {
+  font-weight: 700;
+  color: var(--gold-mid);
+  background: linear-gradient(180deg, var(--gold-top) 12%, var(--gold-mid) 52%, var(--gold-low) 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 calc(var(--px) * 1) 0 #000) drop-shadow(calc(var(--px) * 1) 0 0 #000);
+}
+/* ── the one button: New Set on the title, and the one that asks for the sound back ──
+   (the title's own layout is in index.html, because it is the first thing painted) */
+.menu-item {
+  font-family: var(--slab);
+  font-size: clamp(22px, 4.4vh, 44px);
+  line-height: 1.25;
+  padding: 0.12em 1.3em;
+  /* it is the only thing to press wherever it appears, so it always wears its frame */
+  border: calc(var(--px) * 1) solid #8a6420;
+  animation: beckon 1.1s steps(2) infinite;
+}
+.menu-item:hover,
+.menu-item:focus-visible {
+  outline: none;
+  border-color: #f2c85a;
+}
+@keyframes beckon {
+  50% {
+    opacity: 0.72;
+  }
+}
+
+/* ── during the set ────────────────────────────────────────────────────── */
+.hud {
+  position: absolute;
+  inset: 0;
+}
+/* the thin bar, top right, that only appears while something is changing: here, the knob under his hand */
+.bar {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: max(28%, 150px);
+  opacity: 0;
+  transition: opacity 0.2s steps(3);
+}
+.bar.on {
+  opacity: 1;
+}
+.bar span {
+  display: block;
+  text-align: right;
+  font: 400 clamp(9px, 1.5vh, 14px) / 1 var(--bit);
+  color: #f4e6b8;
+  text-shadow: calc(var(--px) * 1) calc(var(--px) * 1) 0 #000;
+  margin-bottom: calc(var(--px) * 2);
+  letter-spacing: 0.06em;
+}
+.bar i {
+  display: block;
+  height: max(2vh, calc(var(--px) * 4));
+  background: #0c0806;
+  border: calc(var(--px) * 1) solid #000;
+  outline: calc(var(--px) * 1) solid rgba(255, 240, 190, 0.28);
+}
+.bar b {
+  display: block;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, #e0661a, #ffd23a);
+}
+.bar.asked b {
+  background: linear-gradient(90deg, #1e8bd0, #7fe9ff);
+}
+.doing {
+  position: absolute;
+  left: 50%;
+  bottom: max(9.5vh, 58px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 92vw;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(13px, 2.5vh, 24px);
+  line-height: 1.2;
+  opacity: 0;
+  transition: opacity 0.25s steps(4);
+}
+.doing.on {
+  opacity: 1;
+}
+.playing {
+  position: absolute;
+  left: max(2.2vw, env(safe-area-inset-left));
+  bottom: max(2.4vh, env(safe-area-inset-bottom));
+  display: grid;
+  gap: calc(var(--px) * 3);
+}
+.record {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: calc(var(--px) * 4);
+  transition: opacity 0.4s steps(4);
+}
+.record.quiet {
+  opacity: 0.5;
+}
+.record img {
+  width: clamp(40px, 7.4vh, 64px);
+  height: clamp(40px, 7.4vh, 64px);
+  image-rendering: pixelated;
+  border: calc(var(--px) * 1) solid #000;
+  outline: calc(var(--px) * 1) solid rgba(217, 164, 65, 0.7);
+}
+.record b {
+  display: block;
+  font-size: clamp(12px, 2.1vh, 19px);
+  line-height: 1.15;
+}
+.record small {
+  display: block;
+  font: 400 clamp(8px, 1.3vh, 12px) / 1.5 var(--bit);
+  color: #cdbf9c;
+  text-shadow: calc(var(--px) * 1) calc(var(--px) * 1) 0 #000;
+}
+/* a record coming out of the box shows up in the corner the way a pickup did */
+.pickup {
+  position: absolute;
+  right: 4%;
+  bottom: max(11vh, 66px);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s steps(4), transform 0.3s steps(4);
+}
+.pickup.on {
+  opacity: 1;
+  transform: none;
+}
+.pickup img {
+  display: block;
+  width: clamp(56px, 12vh, 104px);
+  image-rendering: pixelated;
+  border: calc(var(--px) * 1) solid #000;
+  outline: calc(var(--px) * 1) solid rgba(217, 164, 65, 0.7);
+}
+.tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: calc(var(--px) * 2) calc(var(--px) * 3);
+  font: 400 clamp(8px, 1.35vh, 12px) / 1.2 var(--bit);
+  color: #f4e6b8;
+  background: rgba(0, 0, 0, 0.78);
+  border: calc(var(--px) * 1) solid #6b4a16;
+  white-space: nowrap;
+  opacity: 0;
+}
+.tip.on {
+  opacity: 1;
+}
+.keys {
+  position: absolute;
+  right: max(2.2vw, env(safe-area-inset-right));
+  bottom: max(2.4vh, env(safe-area-inset-bottom));
+  display: flex;
+  gap: calc(var(--px) * 2);
+}
+.keys button {
+  min-width: clamp(26px, 4.4vh, 36px);
+  height: clamp(26px, 4.4vh, 36px);
+  padding: 0 0.7em;
+  font: 400 clamp(8px, 1.35vh, 12px) / 1 var(--bit);
+  color: #cdbf9c;
+  background: rgba(8, 5, 10, 0.72);
+  border: calc(var(--px) * 1) solid #4a3a1c;
+}
+.keys button:hover,
+.keys button:focus-visible {
+  outline: none;
+  color: #fff0a8;
+  border-color: #d9a441;
+}
+.keys button[aria-pressed='true'] {
+  color: #1a1206;
+  background: #d9a441;
+  border-color: #fff0a8;
+}
+
+/* ── when the browser is holding the sound back: the room goes dim, and there is one thing to press ── */
+.wake {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 2, 8, 0.6);
+  pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  /* no room for the record and the buttons side by side: the buttons take the whole foot of the screen,
+     big enough for a thumb, and the record goes above them */
+  .keys {
+    left: max(2.2vw, env(safe-area-inset-left));
+    justify-content: center;
+  }
+  .keys button {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 40px;
+    padding: 0;
+    font-size: 11px;
+  }
+  .keys button[data-cam='auto'],
+  .keys button[data-mute] {
+    flex: 1.5 1 0;
+  }
+  .playing {
+    bottom: calc(max(2.4vh, env(safe-area-inset-bottom)) + 40px + 12px);
+  }
+  /* (above the records, however many of the two decks have one on) */
+  .doing {
+    bottom: calc(max(2.4vh, env(safe-area-inset-bottom)) + 40px + 12px + 2 * clamp(40px, 7.4vh, 64px) + 26px);
+  }
+  .pickup {
+    bottom: auto;
+    top: 12%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-item {
+    animation: none;
+  }
+}

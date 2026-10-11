@@ -1,0 +1,21 @@
+{
+  "note": "Where everything on the booth is, in metres. x is to the DJ's left, z is away from the DJ, y is up. Read by scripts/textures.mjs (to print the faceplates), blender/build_tomb.py (to build the gear) and the page.",
+  "table": { "y": 0.98, "x": 1.32, "z0": 0.66, "z1": 1.5 },
+  "mixer": { "x": 0, "z": 1.06, "w": 0.62, "d": 0.68, "h": 0.12 },
+  "deck": { "w": 0.8, "d": 0.64, "h": 0.11, "A": { "x": 0.74, "z": 1.06 }, "B": { "x": -0.74, "z": 1.06 } },
+  "strip": { "A": 0.21, "B": -0.21 },
+  "rows": { "trim": 0.265, "hi": 0.175, "mid": 0.085, "low": -0.005, "filter": -0.105 },
+  "fader": { "z0": -0.3, "z1": -0.17 },
+  "xfader": { "z": -0.275, "travel": 0.07 },
+  "cue": { "x": 0.105, "z": -0.185 },
+  "master": { "x": 0, "z": 0.265 },
+  "echo": { "x": 0.06, "z": -0.01 },
+  "reverb": { "x": -0.06, "z": -0.01 },
+  "fxsel": { "x": 0, "z": -0.105, "travel": 0.03 },
+  "meter": { "z0": 0.055, "z1": 0.2, "ch": 0.125, "master": 0.018, "leds": 10 },
+  "knob": { "r": 0.031, "h": 0.05, "big": 0.041 },
+  "platter": { "x": 0.075, "z": 0.02, "r": 0.27 },
+  "tonearm": { "x": -0.3, "z": 0.21, "len": 0.3 },
+  "pitch": { "x": -0.325, "z": -0.1, "travel": 0.1 },
+  "start": { "x": 0.3, "z": -0.255 }
+}
