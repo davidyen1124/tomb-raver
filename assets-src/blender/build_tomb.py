@@ -1,7 +1,7 @@
 # Builds the burial chamber, the booth and DJ MONOLITH as low-poly meshes and writes public/models/tomb.glb.
 #
 #   /Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup \
-#       --python blender/build_tomb.py -- public/models/tomb.glb
+#       --python assets-src/blender/build_tomb.py -- public/models/tomb.glb
 #
 # The look is a 1996 console adventure: rooms made of two-metre blocks with one small picture per face,
 # light baked into the vertices, characters made of rigid pieces. Everything that moves on the page (every
@@ -16,6 +16,7 @@ import random
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))  # this file is in assets-src/blender, two folders down
 sys.path.insert(0, HERE)
 from kit import *  # noqa: E402,F403
 from mathutils import Vector, Matrix  # noqa: E402
@@ -23,9 +24,9 @@ from mathutils.bvhtree import BVHTree  # noqa: E402
 
 TEX = os.path.join(HERE, 'tex')
 ATLAS = json.load(open(os.path.join(TEX, 'atlas.json')))
-LAY = json.load(open(os.path.join(HERE, '..', 'src', 'dj', 'layout.json')))
+LAY = json.load(open(os.path.join(ROOT, 'src', 'dj', 'layout.json')))
 argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-OUT = os.path.abspath(argv[0] if argv else os.path.join(HERE, '..', 'public', 'models', 'tomb.glb'))
+OUT = os.path.abspath(argv[0] if argv else os.path.join(ROOT, 'public', 'models', 'tomb.glb'))
 random.seed(1996)
 
 SKIN = 0x5d92e6

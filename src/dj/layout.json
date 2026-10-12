@@ -1,5 +1,5 @@
 {
-  "note": "Where everything on the booth is, in metres. x is to the DJ's left, z is away from the DJ, y is up. Read by scripts/textures.mjs (to print the faceplates), blender/build_tomb.py (to build the gear) and the page.",
+  "note": "Where everything on the booth is, in metres. x is to the DJ's left, z is away from the DJ, y is up. Read by scripts/textures.mjs (to print the faceplates), assets-src/blender/build_tomb.py (to build the gear) and the page.",
   "table": { "y": 0.98, "x": 1.32, "z0": 0.66, "z1": 1.5 },
   "mixer": { "x": 0, "z": 1.06, "w": 0.62, "d": 0.68, "h": 0.12 },
   "deck": { "w": 0.8, "d": 0.64, "h": 0.11, "A": { "x": 0.74, "z": 1.06 }, "B": { "x": -0.74, "z": 1.06 } },

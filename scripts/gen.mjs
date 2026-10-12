@@ -1,18 +1,18 @@
 // Draws the art with Codex CLI's built-in image_gen tool (the imagegen skill), one `codex exec` per image.
 // An entry's `refs` are attached to the run: the name of another raw image, or `photo:<name>` for a picture
-// in art/ref.
-// usage: node scripts/gen.mjs [--force] [-j 4] [name ...]   (default: every entry in art/manifest.mjs)
+// in assets-src/art/ref.
+// usage: node scripts/gen.mjs [--force] [-j 4] [name ...]   (default: every entry in assets-src/art/manifest.mjs)
 //        a name ending in * picks every entry that starts with it, e.g. 'sleeve-*'
-// Output: art/raw/<name>.png
+// Output: assets-src/art/raw/<name>.png
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { ASSETS, CUTOUT, STYLE } from '../art/manifest.mjs'
+import { ASSETS, CUTOUT, STYLE } from '../assets-src/art/manifest.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
-const RAW = path.join(ROOT, 'art/raw')
-const LOG = path.join(ROOT, 'art/logs')
+const RAW = path.join(ROOT, 'assets-src/art/raw')
+const LOG = path.join(ROOT, 'assets-src/art/logs')
 const GEN = path.join(os.homedir(), '.codex/generated_images')
 fs.mkdirSync(RAW, { recursive: true })
 fs.mkdirSync(LOG, { recursive: true })
@@ -25,7 +25,7 @@ const names = argv.filter((a, i) => !a.startsWith('-') && argv[i - 1] !== '-j')
 
 const picked = ASSETS.filter((a) => (names.length ? names.some((n) => (n.endsWith('*') ? a.name.startsWith(n.slice(0, -1)) : n === a.name)) : true))
 const raw = (name) => path.join(RAW, name + '.png')
-const file = (ref) => (ref.startsWith('photo:') ? path.join(ROOT, 'art/ref', ref.slice(6) + '.png') : raw(ref))
+const file = (ref) => (ref.startsWith('photo:') ? path.join(ROOT, 'assets-src/art/ref', ref.slice(6) + '.png') : raw(ref))
 const has = (name) => fs.existsSync(raw(name))
 
 const HEAD = [

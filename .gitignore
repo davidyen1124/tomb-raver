@@ -2,8 +2,8 @@ node_modules
 dist
 .vercel
 qa
-ref/youtube
-art/logs
-art/ref
+assets-src/ref/youtube
+assets-src/art/logs
+assets-src/art/ref
 .DS_Store
-blender/__pycache__
+assets-src/blender/__pycache__

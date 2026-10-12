@@ -8,7 +8,7 @@ Every observation carries a source tag and the video id(s) it came from.
 
 | Tag | Meaning |
 |---|---|
-| **[F]** | I looked at storyboard frames from that video myself (sprite sheets in `ref/youtube/<id>/sb0_M###.jpg`). |
+| **[F]** | I looked at storyboard frames from that video myself (sprite sheets in `assets-src/ref/youtube/<id>/sb0_M###.jpg`, kept locally and not in the repository). |
 | **[T]** | I looked at the video's 1280x720 thumbnail (`thumb.jpg`), which is a single sharp still. |
 | **[S]** | Taken from the video's auto-generated English subtitles (`<id>.en.vtt`), paraphrased. |
 | **[GK]** | General knowledge. Not checked against any video or manual in this session. Verify before relying on exact figures. |
@@ -25,7 +25,7 @@ For rows marked `-` or `f-`, the "why it is useful" text is what I expect from t
 
 ## Vetted videos
 
-81 videos. Each one was confirmed with a full `yt-dlp` metadata extraction (not just a search hit): id, exact title, channel, duration, public availability. Raw list: `ref/youtube/vetted.tsv`. Titles below are exact. In the id the URL ends with, case matters.
+81 videos. Each one was confirmed with a full `yt-dlp` metadata extraction (not just a search hit): id, exact title, channel, duration, public availability. Raw list: `assets-src/ref/youtube/vetted.tsv` (local only). Titles below are exact. In the id the URL ends with, case matters.
 
 ### A. Club / stream DJ sets with hands and gear visible (13)
 

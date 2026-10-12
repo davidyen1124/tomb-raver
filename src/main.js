@@ -8,6 +8,7 @@ import { createDesk } from './dj/desk.js'
 import { createHands } from './dj/hands.js'
 import { createBrain } from './dj/brain.js'
 import { STYLE_NAMES, keyName } from './audio/records.js'
+import { asset } from './asset.js'
 
 const $ = (s) => document.querySelector(s)
 const canvas = $('#canvas')
@@ -226,13 +227,13 @@ function hud(now) {
   const key = rows.map((x) => `${x.d}${x.r.id}${x.r.seed}${x.bpm}${x.quiet}`).join('|')
   if (key !== shownPlaying) {
     shownPlaying = key
-    playing.innerHTML = rows.map((x) => `<div class="record${x.quiet ? ' quiet' : ''}"><img src="/art/sleeve-${x.r.id}.png" alt="" /><div><b>${x.r.title}</b><small>DECK ${x.d} · ${STYLE_NAMES[x.r.style].toUpperCase()} · ${x.bpm} BPM · ${keyName(x.r.pc).toUpperCase()}</small></div></div>`).join('')
+    playing.innerHTML = rows.map((x) => `<div class="record${x.quiet ? ' quiet' : ''}"><img src="${asset(`art/sleeve-${x.r.id}.png`)}" alt="" /><div><b>${x.r.title}</b><small>DECK ${x.d} · ${STYLE_NAMES[x.r.style].toUpperCase()} · ${x.bpm} BPM · ${keyName(x.r.pc).toUpperCase()}</small></div></div>`).join('')
   }
   // a record leaving the box
   const c = brain.carry
   if (c.on && c.sleeve !== carried) {
     carried = c.sleeve
-    pickup.innerHTML = `<img src="/art/sleeve-${c.sleeve}.png" alt="" />`
+    pickup.innerHTML = `<img src="${asset(`art/sleeve-${c.sleeve}.png`)}" alt="" />`
     pickup.classList.add('on')
     pickupUntil = performance.now() + 3600
   }

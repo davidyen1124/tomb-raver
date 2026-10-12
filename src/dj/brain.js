@@ -1,5 +1,5 @@
 // What DJ MONOLITH knows. It chooses the next record, and plans each mix the way the tutorials teach
-// it (ref/REFERENCES.md): the new record is let go sixteen bars before the change, on a phrase; eight
+// it (docs/REFERENCES.md): the new record is let go sixteen bars before the change, on a phrase; eight
 // bars in the headphones; eight bars coming up with half its low taken out; the basses swapped on the
 // one; then the old record dissolved, out by the one, or thrown into an echo. Between mixes: a reverb in
 // the breakdown, a filter wound up through a build and let go on the drop, an arm in the air.

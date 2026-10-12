@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "gen": "node scripts/gen.mjs",
     "textures": "node scripts/textures.mjs",
-    "model": "node scripts/textures.mjs && /Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup --python blender/build_tomb.py -- public/models/tomb.glb",
+    "model": "node scripts/textures.mjs && /Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup --python assets-src/blender/build_tomb.py -- public/models/tomb.glb",
     "meta": "node scripts/meta.mjs",
     "listen": "node scripts/listen.mjs",
     "look": "node scripts/look.mjs",

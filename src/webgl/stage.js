@@ -6,6 +6,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ATLAS from './atlas.json'
+import { asset } from '../asset.js'
 
 const LINES = 360 // the picture is this many pixels tall, whatever the screen
 const NL = 6 // lights that move: two fires, two coloured washes, the crystal, a flash
@@ -133,7 +134,7 @@ const SHOTS = {
 // On a window taller than it is wide (a phone held upright) three of them stand somewhere else, so that
 // he and the whole desk are still in the picture: `tall` says where.
 
-export async function createStage(canvas, { onProgress = () => {}, model = '/models/tomb.glb' } = {}) {
+export async function createStage(canvas, { onProgress = () => {}, model = asset('models/tomb.glb') } = {}) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance', stencil: false })
   const FOG = new THREE.Color(0.028, 0.02, 0.04)
   renderer.setClearColor(FOG, 1)

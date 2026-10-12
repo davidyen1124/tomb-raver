@@ -1,6 +1,6 @@
-// Every texture in the tomb, written into blender/tex/ for blender/build_tomb.py.
+// Every texture in the tomb, written into assets-src/blender/tex/ for assets-src/blender/build_tomb.py.
 // Three kinds: small repeating grey "cloth" tiles that the model's vertex colours tint (the Pebble, the
-// gear's plastic and metal); the pictures the image model drew (art/raw), cut down to the size a 1996
+// gear's plastic and metal); the pictures the image model drew (assets-src/art/raw), cut down to the size a 1996
 // console would have given them; and everything with lettering or lights on it, drawn here pixel by
 // pixel. The last two share one sheet, like a console's texture page. atlas.json says where each is.
 // Also writes the title-screen pictures and the record sleeves the page itself shows (public/art).
@@ -10,7 +10,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
-const OUT = path.join(ROOT, 'blender/tex')
+const OUT = path.join(ROOT, 'assets-src/blender/tex')
 fs.mkdirSync(OUT, { recursive: true })
 
 function rng(seed) {
@@ -189,7 +189,7 @@ const tiles = [
 
 // ── the sheet: pictures and labels ────────────────────────────────────────
 const LAYOUT = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/dj/layout.json'), 'utf8'))
-const RAW = path.join(ROOT, 'art/raw')
+const RAW = path.join(ROOT, 'assets-src/art/raw')
 const PUB = path.join(ROOT, 'public/art')
 fs.mkdirSync(PUB, { recursive: true })
 const SLEEVES = ['medipack', 'swandive', 'secret', 'tank', 'block', 'lever', 'crystal', 'butler', 'valley', 'boulder']
@@ -551,15 +551,18 @@ console.log(`title 480x320, logo ${logo.width}x${logo.height}, ${SLEEVES.length}
     const at = `${hot[0]} ${hot[1]}, ${fallback}`
     const one = `url(/art/cursor-${name}.png)`
     const set = (fn) => `${fn}(${one} 1x, url(/art/cursor-${name}-2x.png) 2x)`
+    // (the question put to the browser is only whether it can read such a line, so no real picture is named
+    // in it: Vite rewrites the addresses in the rules for wherever the page is served from, but not in a question)
+    const can = (fn) => `(cursor: ${fn}(url(a.png) 1x, url(b.png) 2x) 0 0, auto)`
     return [
       `${selector} {\n  cursor: ${one} ${at};\n}`,
       // (on a sharp screen, the same picture at twice the size: said separately, so that a browser which does not know how keeps the line above)
-      `@supports (cursor: ${set('image-set')} 0 0, auto) {\n  ${selector} {\n    cursor: ${set('image-set')} ${at};\n  }\n}`,
-      `@supports (cursor: ${set('-webkit-image-set')} 0 0, auto) and (not (cursor: ${set('image-set')} 0 0, auto)) {\n  ${selector} {\n    cursor: ${set('-webkit-image-set')} ${at};\n  }\n}`,
+      `@supports ${can('image-set')} {\n  ${selector} {\n    cursor: ${set('image-set')} ${at};\n  }\n}`,
+      `@supports ${can('-webkit-image-set')} and (not ${can('image-set')}) {\n  ${selector} {\n    cursor: ${set('-webkit-image-set')} ${at};\n  }\n}`,
     ].join('\n')
   }
   const css = [
-    '/* Written by scripts/textures.mjs. The pointer is his own hand, drawn by the image model (art/raw/cursor-*.png):',
+    '/* Written by scripts/textures.mjs. The pointer is his own hand, drawn by the image model (assets-src/art/raw/cursor-*.png):',
     '   open as it moves about, about to pinch over anything that can be pressed or turned, closed while it holds. */',
     rule('html', 'open', 'auto'),
     rule('button,\n#canvas.over,\n.wake', 'point', 'pointer'),
